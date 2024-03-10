@@ -9,15 +9,25 @@
  */
 class Solution {
 public:
+bool func(TreeNode* root, TreeNode* p,vector<TreeNode*> &ans)
+{
+    if(!root)return false;
+    ans.push_back(root);
+    if(root==p)
+    return true;
+    if(func(root->left,p,ans) || func(root->right,p,ans))
+    return true;
+     ans.pop_back();
+     return false;
+
+}
     TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
-        if(root==nullptr || root==p || root==q)
-        return root;
-        TreeNode* left=lowestCommonAncestor(root->left,p,q);
-        TreeNode* right=lowestCommonAncestor(root->right,p,q);
-        if(left==nullptr)return right;
-        else if(right==nullptr)return left;
-        else
-        return root;
+        vector<TreeNode*>first,second;
+        if (!func(root, p, first) || !func(root, q, second)) return nullptr;
+        int i=0;
+        while(i<first.size()&&i<second.size() && first[i]==second[i])
+        i++;
+        return first[i-1];
         
         
     }
