@@ -16,16 +16,14 @@ public:
         if(root==nullptr)return 0;
         q.push({root,0});
         int ans=0;
-         int first,last;
-         long long id;
         while(!q.empty())
         {
             int size=q.size();
             int min=q.front().second;
-           
+            int first,last;
             for(int i=0;i<size;i++)
             {
-                 id=q.front().second-min;
+                long long id=q.front().second-min;
                 TreeNode* node=q.front().first;
                 q.pop();
                 if(i==0)first=id;
