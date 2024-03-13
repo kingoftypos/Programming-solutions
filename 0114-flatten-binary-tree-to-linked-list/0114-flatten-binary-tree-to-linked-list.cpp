@@ -11,19 +11,26 @@
  */
 class Solution {
 public:
-void flat(TreeNode* &prev,TreeNode* root)
-{
-    if(root==nullptr)
-    return;
-    flat(prev,root->right);
-    flat(prev,root->left);
-    root->right=prev;
-    root->left=nullptr;
-    prev=root;
-}
+
     void flatten(TreeNode* root) {
-        TreeNode* prev=nullptr;
-        flat(prev,root);
+       TreeNode* curr=root;
+       while(curr)
+       {
+        if(curr->left)
+        {
+            TreeNode* prev=curr->left;
+            while(prev->right)
+            {
+                prev=prev->right;
+            }
+            prev->right=curr->right;
+            curr->right=curr->left;
+            curr->left=nullptr;
+
+        }
+        curr=curr->right;
+       }
+       
         
     }
 };
