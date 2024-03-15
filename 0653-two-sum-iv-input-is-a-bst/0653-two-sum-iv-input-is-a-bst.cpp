@@ -58,8 +58,9 @@ public:
         while(ln<rn)
         {
         if(ln+rn==k)return true;
-        else if(ln+rn < k)ln=l.next();
-        else rn=r.next();
+        else if(ln+rn < k) rn=r.next();
+        else
+        ln=l.next();
         }
         return false;
 
