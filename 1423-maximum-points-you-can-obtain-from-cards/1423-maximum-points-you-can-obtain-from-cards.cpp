@@ -8,7 +8,7 @@ public:
         sum+=cardPoints[t];
        }
        ans=sum;
-       while(i>=0)
+       while(i>=0 && i<j)
        {
         sum-=cardPoints[i];
         sum+=cardPoints[j];
