@@ -16,7 +16,7 @@ public:
                 {
                     vis[i][j]=1;
                     q.push({{i,j},0});
-                    
+                    ans[i][j]=0;
                 }
                
             }
@@ -28,14 +28,13 @@ public:
             int steps=q.front().second;
             q.pop();
            ans[row][col]=steps;
-            
             for(int i=0;i<4;i++)
             {
                 int nrow=row+x[i];
                 int ncol=col+y[i];
                 if(nrow>=0 && ncol>=0 &&nrow<n && ncol<m && !vis[nrow][ncol]){
-               
-                vis[row][col]=1;
+                vis[nrow][ncol]=1;
+                
                 q.push({{nrow,ncol},steps+1});
                 }
             }
