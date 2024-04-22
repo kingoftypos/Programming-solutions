@@ -1,25 +1,18 @@
 class Solution {
 public:
-    bool check(vector<vector<int>>& graph, int start,vector<int> &vis)
+    bool check(vector<vector<int>>& graph, int start,int col,vector<int> &vis)
     {
-        queue<int> q;
-        q.push(start);
-        vis[start]=0;
-        while(!q.empty())
+        
+        vis[start]=col;
+        for(auto it : graph[start])
         {
-            int node=q.front();
-            q.pop();
-            for(auto it: graph[node])
+            if(vis[it]==-1)
             {
-                if(vis[it]==-1)
-                {
-                    vis[it]= !vis[node];
-                    q.push(it);
-                }
-                else if(vis[it]==vis[node])
+                if(!check(graph,it,!col,vis))
                 return false;
             }
-
+            else if(vis[it]==vis[start])
+            return false;
         }
         return true;
     }
@@ -31,7 +24,7 @@ public:
             
                 if(vis[i]==-1)
                 {
-                if(check(graph,i,vis)==false)
+                if(check(graph,i,0,vis)==false)
                 return false;
                 }
             
