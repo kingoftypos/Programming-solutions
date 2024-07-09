@@ -10,14 +10,16 @@ public:
         {
             if(!flag)
             {
-                index++;
+                index+=min(n-1,time);
+                
             }
             else
-            index--;
-
-            time--;
-            if(index==n-1 || index==0)
-                flag=!flag;
+            {
+                index-=min(n-1,time);
+            }
+            time-=min(n-1,time);
+            flag=!flag;
+            
         }
         return temp[index];
         
