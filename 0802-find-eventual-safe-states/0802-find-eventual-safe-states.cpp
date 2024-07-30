@@ -10,7 +10,7 @@ public:
                 {
                     if(dfs(graph,vis,pathvis,check,it))
                     {
-                        check[node]=0;
+                        check[it]=0;
                         return true;
                     }
                     
@@ -18,7 +18,7 @@ public:
                 
                 else if(pathvis[it])
                 {
-                    check[node]=0;
+                    check[it]=0;
                     return true;
                 }
                 
