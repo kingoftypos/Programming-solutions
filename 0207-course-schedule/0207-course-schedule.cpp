@@ -1,42 +1,41 @@
 class Solution {
 public:
-    bool canFinish(int nc, vector<vector<int>>& pre) {
-            vector<int> adj[nc];
-            vector<int> inorder(nc, 0);  
-
-             queue<int> q;
-            for(int i=0;i<pre.size();i++)
+    bool canFinish(int n, vector<vector<int>>& pre) {
+        
+        vector<int> vis(n,0);
+        queue<int> q;
+        vector<int> adj[n];
+        vector<int> topo;
+        vector<int> indegree(n,0);
+        for(int i=0;i<pre.size();i++)
+        {
+            adj[pre[i][1]].push_back(pre[i][0]);
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int it:adj[i])
             {
-                int u=pre[i][0];
-                int v=pre[i][1];
-                adj[v].push_back(u);
+                indegree[it]++;
             }
-           
-            
-            for(int i=0;i<nc;i++)
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(!indegree[i])
+            q.push(i);
+        }
+        while(!q.empty())
+        {
+            int node=q.front();
+            q.pop();
+            topo.push_back(node);
+            for(int it:adj[node])
             {
-                for(auto it:adj[i])
-                inorder[it]++;
+                indegree[it]--;
+                if(indegree[it]==0)
+                q.push(it);
             }
-            for(int i=0;i<inorder.size();i++)
-            {
-                if(inorder[i]==0)
-                q.push(i);
-            }
-            int cnt=0;
-            while(!q.empty())
-            {
-                int node=q.front();
-                q.pop();
-                cnt++;
-                for(auto it:adj[node])
-                {
-                    inorder[it]--;
-                    if(inorder[it]==0)
-                    q.push(it);
-                }
-            }
-            return cnt==nc;
+        }
+        return n==topo.size();
         
     }
 };
