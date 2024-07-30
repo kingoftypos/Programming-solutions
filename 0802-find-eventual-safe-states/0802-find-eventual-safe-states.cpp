@@ -1,38 +1,48 @@
 class Solution {
 public:
-    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
-        vector<vector<int>> adj(graph.size());
-        vector<int> ans;
-        vector<int> indegree(graph.size());
-        for(int i=0;i<graph.size();i++)
+        bool dfs(vector<vector<int>> &graph,vector<int> &vis,vector<int> &pathvis,vector<int> &check,int node)
         {
-          for(auto it:graph[i])
-          {
-            adj[it].push_back(i);
-            indegree[i]++;
-          }
-        }
-        queue<int> q;
-        for(int i=0;i<adj.size();i++)
-        {
-            if(indegree[i]==0)
-            q.push(i);
-        }
-        while(!q.empty())
-        {
-            int node=q.front();
-            q.pop();
-            ans.push_back(node);
-            for(auto it: adj[node])
+            vis[node]=1;
+            pathvis[node]=1;
+            for(auto it:graph[node])
             {
-                indegree[it]--;
-                if(indegree[it]==0)
-                q.push(it);
+                if(!vis[it])
+                {
+                    if(dfs(graph,vis,pathvis,check,it))
+                    {
+                        check[node]=0;
+                        return true;
+                    }
+                    
+                }
+                
+                else if(pathvis[it])
+                {
+                    check[node]=0;
+                    return true;
+                }
+                
             }
+            check[node]=1;
+            pathvis[node]=0;
+            return false;
         }
-        sort(ans.begin(),ans.end());
+    vector<int> eventualSafeNodes(vector<vector<int>>& graph) {
+        int n=graph.size();
+        vector<int> vis(n,0),pathvis(n,0);
+        vector<int> check(n,0);
+        vector<int> ans;
+        for(int i=0;i<n;i++)
+        {
+            if(!vis[i])
+            dfs(graph,vis,pathvis,check,i);
+        }
+        for(int i=0;i<n;i++)
+        {
+            if(check[i])
+            ans.push_back(i);
+        }
         return ans;
-        
         
     }
 };
